@@ -13,6 +13,9 @@ leftFrontM = Motor(Port.A, Direction.CLOCKWISE)
 leftBackM = Motor(Port.B, Direction.COUNTERCLOCKWISE)
 rightFrontM = Motor(Port.C, Direction.CLOCKWISE)
 rightBackM = Motor(Port.D, Direction.COUNTERCLOCKWISE)
+frontUS = UltrasonicSensor(Port.S1)
+frontCS = ColorSensor(Port.S2)
+backCS = ColorSensor(Port.S3)
 
 def drive(speed: int, time: int, reverse: bool) -> None:
     if(reverse == True):
@@ -25,7 +28,7 @@ def drive(speed: int, time: int, reverse: bool) -> None:
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
 
-def turn(speed: int, tim`e: int, turnLeft: bool) -> None:
+def turn(speed: int, time: int, turnLeft: bool) -> None:
     # turnLeft = True -> left turn
     # turnLeft = False -> right turn
     if(turnLeft == False):
@@ -41,4 +44,20 @@ def turn(speed: int, tim`e: int, turnLeft: bool) -> None:
         motor.stop()
 
 # 1050 is the max speed
-turn(1050, 4000, True) # perfect 90 degree turn
+# turn(1050, 4000, True) # perfect 90 degree turn
+
+while True:
+    frontDist = frontUS.distance()
+    if frontDist < 150:
+        wait(500)
+        turn(1050, 4000, True)
+        leftDist = frontUS.distance()
+
+        wait(500)
+        turn(1050, 8000, False)
+        rightDist = frontUS.distance()
+
+        if leftDist < rightDist:
+            turn(1050, 8000, True) # turn leftward since it is positioned rightward
+
+    wait(100)
