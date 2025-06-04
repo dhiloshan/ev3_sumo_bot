@@ -9,22 +9,22 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 
 # ports are reversed
 ev3 = EV3Brick()
-leftFrontM = Motor(Port.D, Direction.CLOCKWISE)
-leftBackM = Motor(Port.C, Direction.COUNTERCLOCKWISE)
-rightFrontM = Motor(Port.B, Direction.CLOCKWISE)
-rightBackM = Motor(Port.A, Direction.COUNTERCLOCKWISE)
+leftFrontM = Motor(Port.D, Direction.COUNTERCLOCKWISE)
+leftBackM = Motor(Port.C, Direction.CLOCKWISE)
+rightFrontM = Motor(Port.B, Direction.COUNTERCLOCKWISE)
+rightBackM = Motor(Port.A, Direction.CLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
 
-def drive(speed: int, time: int, reverse: bool) -> None:
+def drive(speed: int, reverse: bool) -> None:
     if(reverse == True):
         speed *= -1
 
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.run(speed)
-    wait(time)
 
+def stopMotors() -> None:
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
 
@@ -43,22 +43,18 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
 
-# 1050 is the max speed
-# turn(1050, 4000, True) # perfect 90 degree turn
-
 while True:
-    drive(1050, 500, True)
+    drive(1050, True)
     frontDist = frontUS.distance()
     if frontDist < 180:
-        wait(500)
+        stopMotors()
+        wait(300)
         turn(1050, 4000, True)
         leftDist = frontUS.distance()
 
-        wait(500)
+        wait(300)
         turn(1050, 8000, False)
         rightDist = frontUS.distance()
 
         if leftDist > rightDist:
             turn(1050, 8000, True) # turn leftward since it is positioned rightward
-
-    wait(100)

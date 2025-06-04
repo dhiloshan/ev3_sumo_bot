@@ -7,12 +7,16 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
-# ports are reversed
+"""
+has all the functions for EV3 projects
+other files will contain a subset of these functions, as not all of them are needed
+"""
+
 ev3 = EV3Brick()
-leftFrontM = Motor(Port.D, Direction.CLOCKWISE)
-leftBackM = Motor(Port.C, Direction.COUNTERCLOCKWISE)
-rightFrontM = Motor(Port.B, Direction.CLOCKWISE)
-rightBackM = Motor(Port.A, Direction.COUNTERCLOCKWISE)
+leftFrontM = Motor(Port.D, Direction.COUNTERCLOCKWISE)
+leftBackM = Motor(Port.C, Direction.CLOCKWISE)
+rightFrontM = Motor(Port.B, Direction.COUNTERCLOCKWISE)
+rightBackM = Motor(Port.A, Direction.CLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
