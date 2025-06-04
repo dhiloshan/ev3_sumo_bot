@@ -7,12 +7,12 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
-
+# ports are reversed
 ev3 = EV3Brick()
-leftFrontM = Motor(Port.A, Direction.CLOCKWISE)
-leftBackM = Motor(Port.B, Direction.COUNTERCLOCKWISE)
-rightFrontM = Motor(Port.C, Direction.CLOCKWISE)
-rightBackM = Motor(Port.D, Direction.COUNTERCLOCKWISE)
+leftFrontM = Motor(Port.D, Direction.CLOCKWISE)
+leftBackM = Motor(Port.C, Direction.COUNTERCLOCKWISE)
+rightFrontM = Motor(Port.B, Direction.CLOCKWISE)
+rightBackM = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
@@ -47,8 +47,9 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
 # turn(1050, 4000, True) # perfect 90 degree turn
 
 while True:
+    drive(1050, 500, True)
     frontDist = frontUS.distance()
-    if frontDist < 150:
+    if frontDist < 180:
         wait(500)
         turn(1050, 4000, True)
         leftDist = frontUS.distance()
@@ -57,7 +58,7 @@ while True:
         turn(1050, 8000, False)
         rightDist = frontUS.distance()
 
-        if leftDist < rightDist:
+        if leftDist > rightDist:
             turn(1050, 8000, True) # turn leftward since it is positioned rightward
 
     wait(100)
