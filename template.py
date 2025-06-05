@@ -20,7 +20,7 @@ rightBackM = Motor(Port.A, Direction.CLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
-# backGyro = GyroSensor(Port.S4)
+backTS = TouchSensor(Port.S4)
 
 def drive_time(speed: int, time: int, reverse: bool) -> None:
     if(reverse == True):
@@ -58,14 +58,16 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
     wait(time)
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
-"""
-def detectCollision() -> bool:
-    # checks if the other functions are running
-    # if the angle changes (fork going upward), then turn to get away from the robot
-"""
+
+def detectCollision() -> None: # uses the touch sensor to do something
+    if backTS.pressed():
+        pass
+
+def stayInBound() -> None: # uses the colour sensor to make sure the robot is in bound
+
 
 while True:
-    drive(1050, True)
+    drive(1050, False)
     frontDist = frontUS.distance()
     if frontDist < 180:
         stopMotors()

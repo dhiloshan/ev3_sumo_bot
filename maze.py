@@ -44,7 +44,7 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
         motor.stop()
 
 while True:
-    drive(1050, True)
+    drive(1050, False)
     frontDist = frontUS.distance()
     if frontDist < 180:
         stopMotors()
