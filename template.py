@@ -85,10 +85,7 @@ def detectCollision() -> None: # uses the touch sensor to do something
         pass
 
 def stayInBound() -> None: # uses the colour sensor to make sure the robot is in bound
-
+    
 
 while True:
-    drive(1050, False)
-    frontDist = frontUS.distance()
-    if frontDist < 180:
-        stopMotors()
+
