@@ -16,9 +16,10 @@ rightBackM = Motor(Port.A, Direction.CLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
+frontGS = GyroSensor(Port.S4)
 
 def drive(speed: int, reverse: bool) -> None:
-    if(reverse == True):
+    if reverse == True:
         speed *= -1
 
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
@@ -31,7 +32,7 @@ def stopMotors() -> None:
 def turn(speed: int, time: int, turnLeft: bool) -> None:
     # turnLeft = True -> left turn
     # turnLeft = False -> right turn
-    if(turnLeft == False):
+    if turnLeft == False:
         speed *= -1
 
     for leftMotor in [leftFrontM, leftBackM]:
@@ -49,12 +50,14 @@ while True:
     if frontDist < 180:
         stopMotors()
         wait(300)
-        turn(1050, 4000, True)
+        turn(800, 4000, True)
         leftDist = frontUS.distance()
 
         wait(300)
-        turn(1050, 8000, False)
+        turn(800, 8000, False)
         rightDist = frontUS.distance()
 
         if leftDist > rightDist:
-            turn(1050, 8000, True) # turn leftward since it is positioned rightward
+            turn(800, 8000, True) # turn leftward since it is positioned rightward
+
+    wait(100)

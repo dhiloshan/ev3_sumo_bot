@@ -9,6 +9,11 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 
 
 ev3 = EV3Brick()
+sensor = GyroSensor(Port.S4)
 
-# Write your program here.
-ev3.speaker.beep()
+while True:
+    ev3.screen.clear()
+    curAngle = sensor.angle()      # returns an int
+    ev3.screen.draw_text(0, 50, curAngle)
+    ev3.speaker.beep()
+    wait(500)

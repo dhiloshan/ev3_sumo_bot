@@ -6,6 +6,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
+import math
 
 """
 has all the functions for EV3 projects
@@ -20,10 +21,10 @@ rightBackM = Motor(Port.A, Direction.CLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
-backTS = TouchSensor(Port.S4)
+backGS = GyroSensor(Port.S4)
 
 def drive_time(speed: int, time: int, reverse: bool) -> None:
-    if(reverse == True):
+    if reverse == True:
         speed *= -1
 
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
@@ -34,7 +35,7 @@ def drive_time(speed: int, time: int, reverse: bool) -> None:
         motor.stop()
 
 def drive(speed: int, reverse: bool) -> None:
-    if(reverse == True):
+    if reverse == True:
         speed *= -1
 
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
@@ -47,7 +48,7 @@ def stopMotors() -> None:
 def turn(speed: int, time: int, turnLeft: bool) -> None:
     # turnLeft = True -> left turn
     # turnLeft = False -> right turn
-    if(turnLeft == False):
+    if turnLeft == False:
         speed *= -1
 
     for leftMotor in [leftFrontM, leftBackM]:
@@ -56,6 +57,26 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
         rightMotor.run(-speed)
 
     wait(time)
+    for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
+        motor.stop()
+
+def gyroTurn(speed: int, angle: int, turnLeft: bool):
+    # right turn is positive angle
+    # left turn is negative angle
+    sensor.reset_angle(0)
+    
+    if turnLeft == False:
+        speed *= -1
+    
+    startAngle = abs(frontGS.angle())
+
+    while abs(frontGS.angle()) - startAngle < angle:
+        for leftMotor in [leftFrontM, leftBackM]:
+            leftMotor.run(speed)
+
+        for rightMotor in [rightFrontM, rightBackM]:
+            rightMotor.run(-speed)
+
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
 
