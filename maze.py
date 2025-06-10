@@ -17,7 +17,6 @@ rightBackM = Motor(Port.A, Direction.CLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
-frontGS = GyroSensor(Port.S4)
 
 def drive(speed: int, reverse: bool) -> None:
     if reverse == True:

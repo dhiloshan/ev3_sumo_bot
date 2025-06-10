@@ -6,7 +6,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-import math
+import math, random
 
 """
 has all the functions for EV3 projects
@@ -63,14 +63,12 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
 def gyroTurn(speed: int, angle: int, turnLeft: bool):
     # right turn is positive angle
     # left turn is negative angle
-    sensor.reset_angle(0)
-    
     if turnLeft == False:
         speed *= -1
     
-    startAngle = abs(frontGS.angle())
+    startAngle = abs(backGS.angle())
 
-    while abs(frontGS.angle()) - startAngle < angle:
+    while abs(backGS.angle()) - startAngle < angle:
         for leftMotor in [leftFrontM, leftBackM]:
             leftMotor.run(speed)
 
@@ -85,7 +83,14 @@ def detectCollision() -> None: # uses the touch sensor to do something
         pass
 
 def stayInBound() -> None: # uses the colour sensor to make sure the robot is in bound
+    if frontCS.color() != Color.BLACK:
+        stopMotors()
+        drive_time(1050, 1500, True)
+        gyroTurn(1050, random.randrange(30, 50), True)
     
+    if backCS.color() != Color.BLACK:
+        stopMotors()
+        drive_time(1050, 1500, False)
+        gyroTurn(1050, random.randrange(30, 50), False)
 
-while True:
 
