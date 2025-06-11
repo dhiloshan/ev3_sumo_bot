@@ -16,7 +16,7 @@ rightBackM = Motor(Port.A, Direction.CLOCKWISE)
 frontUS = UltrasonicSensor(Port.S1)
 frontCS = ColorSensor(Port.S2)
 backCS = ColorSensor(Port.S3)
-backGS = GyroSensor(Port.S4)
+backTS = TouchSensor(Port.S4)
 
 def drive_time(speed: int, time: int, reverse: bool) -> None:
     if reverse == True:
@@ -55,9 +55,10 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
 
-def detectCollision() -> None: # detects collsion via the gyro sensor
-    if backTS.pressed():
-        pass
+def detectCollision() -> None: # detects collsion via the touch sensor
+    if backTS.pressed(): # there is a robot behind our robot
+        ev3.speaker.beep()
+        drive(1050, True)
 
 def stayInBound() -> None: # uses the colour sensor to make sure the robot is in bound
     if frontCS.color() != Color.BLACK:
@@ -72,12 +73,28 @@ def stayInBound() -> None: # uses the colour sensor to make sure the robot is in
 
 while True:
     drive(1050, False)
+    # code doesnt turn when it sees border it just stops and goes backwoard a bit
     if frontCS.color() != Color.BLACK:
         stopMotors()
         drive_time(1050, 1500, True)
-        gyroTurn(1050, random.randrange(30, 50), True)
+        turn(1050, random.randrange(30, 50), True)
     
     if backCS.color() != Color.BLACK:
         stopMotors()
         drive_time(1050, 1500, False)
-        gyroTurn(1050, random.randrange(30, 50), False)
+        turn(1050, random.randrange(30, 50), False)
+
+    if backTS.pressed(): # there is a robot behind our robot
+        # code stops here
+        stopMotors()
+        ev3.speaker.beep()
+
+        while frontCS.color() == Color.BLACK and backCS.color() == Color.BLACK:
+            drive(1050, True)
+        
+        stopMotors()  
+    
+    if frontUS.distance() < 150:
+        ev3.speaker.say("Got you")
+        
+    
