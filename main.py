@@ -55,34 +55,18 @@ def turn(speed: int, time: int, turnLeft: bool) -> None:
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
 
-def detectCollision() -> None: # detects collsion via the touch sensor
-    if backTS.pressed(): # there is a robot behind our robot
-        ev3.speaker.beep()
-        drive(1050, True)
-
-def stayInBound() -> None: # uses the colour sensor to make sure the robot is in bound
-    if frontCS.color() != Color.BLACK:
-        stopMotors()
-        drive_time(1050, 1500, True)
-        gyroTurn(1050, random.randrange(30, 50), True)
-    
-    if backCS.color() != Color.BLACK:
-        stopMotors()
-        drive_time(1050, 1500, False)
-        gyroTurn(1050, random.randrange(30, 50), False)
-
 while True:
     drive(1050, False)
     # code doesnt turn when it sees border it just stops and goes backwoard a bit
     if frontCS.color() != Color.BLACK:
         stopMotors()
-        drive_time(1050, 1500, True)
-        turn(1050, random.randrange(30, 50), True)
+        drive_time(1050, 4500, True)
+        turn(1050, random.randrange(1400, 2800), True)
     
     if backCS.color() != Color.BLACK:
         stopMotors()
-        drive_time(1050, 1500, False)
-        turn(1050, random.randrange(30, 50), False)
+        drive_time(1050, 4500, False)
+        turn(1050, random.randrange(1400, 2800), False)
 
     if backTS.pressed(): # there is a robot behind our robot
         # code stops here
@@ -91,10 +75,15 @@ while True:
 
         while frontCS.color() == Color.BLACK and backCS.color() == Color.BLACK:
             drive(1050, True)
+            wait(50)
         
         stopMotors()  
-    
+        drive_time(1050, 3200, False)
+        turn(1050, random.randint(2800, 3800), True)
+
     if frontUS.distance() < 150:
+        wait(1500)
         ev3.speaker.say("Got you")
+        wait(2000)
         
     
