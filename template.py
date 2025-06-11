@@ -56,6 +56,21 @@ def turnTime(speed: int, time: int, turnLeft: bool) -> None:
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.stop()
 
+def turn(speed: int, turnLeft: bool) -> None:
+    # turnLeft = True -> left turn
+    # turnLeft = False -> right turn
+    if turnLeft == False:
+        speed *= -1
+
+    for leftMotor in [leftFrontM, leftBackM]:
+        leftMotor.run(speed)
+    for rightMotor in [rightFrontM, rightBackM]:
+        rightMotor.run(-speed)
+
+def stopMotors() -> None:
+    for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
+        motor.stop()
+
 def gyroTurn(speed: int, angle: int, turnLeft: bool):
     # right turn is positive angle
     # left turn is negative angle
