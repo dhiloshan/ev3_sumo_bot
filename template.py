@@ -41,11 +41,7 @@ def drive(speed: int, reverse: bool) -> None:
     for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
         motor.run(speed)
 
-def stopMotors() -> None:
-    for motor in [leftFrontM, leftBackM, rightFrontM, rightBackM]:
-        motor.stop()
-
-def turn(speed: int, time: int, turnLeft: bool) -> None:
+def turnTime(speed: int, time: int, turnLeft: bool) -> None:
     # turnLeft = True -> left turn
     # turnLeft = False -> right turn
     if turnLeft == False:
@@ -92,5 +88,3 @@ def stayInBound() -> None: # uses the colour sensor to make sure the robot is in
         stopMotors()
         drive_time(1050, 1500, False)
         gyroTurn(1050, random.randrange(30, 50), False)
-
-
