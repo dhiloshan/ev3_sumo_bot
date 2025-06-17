@@ -2,6 +2,8 @@
 
 Our project was developed using the Micropython Extension and the Git Version Control using the VSCode environment, which controls our EV3 robot.
 
+We downloaded the EV3 Micropython software onto the SD card and inserted it into the EV3 robot.
+
 All code commits were made by Dhiloshan (the commit by Terrance was code written by Dhiloshan on Terrance's computer) 
 and all of the building was done by Terrance.
 
@@ -11,7 +13,7 @@ and all of the building was done by Terrance.
 
 Hope you enjoy!
 
-![IMG_5029](https://github.com/user-attachments/assets/6af44bd5-4961-4d87-ae39-09f173425b07)
-![IMG_5028](https://github.com/user-attachments/assets/55afa2c5-e704-437c-b2d3-4b9a28d185b3)
-![IMG_5025](https://github.com/user-attachments/assets/0f61c163-9815-48cb-a208-c57c47b85cc0)
-![IMG_5024](https://github.com/user-attachments/assets/afb17d99-bebd-4d62-9537-8e28e5510525)
+![IMG_5043 2](https://github.com/user-attachments/assets/514d6039-87e3-42b5-b5b5-a4b4387387a2)
+![IMG_5044 2](https://github.com/user-attachments/assets/abd0df74-b0d1-4201-a374-f33b0fac4964)
+![IMG_5045 2](https://github.com/user-attachments/assets/b36bfc15-5b83-4bb1-9fbb-0e94bfec1b23)
+![IMG_5049](https://github.com/user-attachments/assets/cd32002e-5546-4f11-b418-f607bb16188c)
